@@ -179,6 +179,7 @@ if __name__ == "__main__":
         help="The path to the partition config file",
     )
     parser.add_argument("--n_ranks", default=4, type=int, help="Number of ranks")
+    parser.add_argument("--sample_only", action='store_true')
     parser.add_argument(
         "--feat_mode",
         default="PartitionCache",

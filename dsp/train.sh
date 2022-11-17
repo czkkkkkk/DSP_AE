@@ -1,15 +1,6 @@
 #!/bin/bash
-#source /efs/zkcai/miniconda3/etc/profile.d/conda.sh
-#conda activate dsdgl
-which python
 n_gpu=$1
-datadir=./data/reddit${n_gpu}/reddit.json
-# datadir=/data/ds/metis_ogbn-papers100M${n_gpu}/ogbn-papers100M.json
-datadir=/data/ds/distdgl/ogbn-papers100M${n_gpu}/ogb-paper100M.json
-datadir=/data/ds/ogbn-papers100M${n_gpu}/ogb-paper100M.json
 datadir=/efs/zkcai/projects/dsdgl/examples/pytorch/graphsage/ds/data/ogb-product${n_gpu}/ogb-product.json
-
-fanout=5,10,15
 
 export DGL_DS_USE_NCCL=1
 export DGL_DS_MASTER_PORT=12210
