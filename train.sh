@@ -3,9 +3,9 @@ model="graphsage"
 
 echo dsp_epoch_time
 conda activate dsp
-for dataset in "products" "papers" "friendster"; do
+for dataset in "ogb-product" "papers" "friendster"; do
   for rank in 1 2 4 8; do
-    bash dsp/table_V.sh $dataset $rank
+    bash dsp/train.sh $dataset $rank
   done
 done
 

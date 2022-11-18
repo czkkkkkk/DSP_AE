@@ -1,6 +1,7 @@
 #!/bin/bash
-n_gpu=$1
-datadir=/efs/zkcai/projects/dsdgl/examples/pytorch/graphsage/ds/data/ogb-product${n_gpu}/ogb-product.json
+dataset=$1
+n_gpu=$2
+datadir=/data/dsp/${dataset}${n_gpu}/${dataset}.json
 
 export DGL_DS_USE_NCCL=1
 export DGL_DS_MASTER_PORT=12210
