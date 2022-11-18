@@ -13,7 +13,7 @@ feat_cache_gb=-1
 graph_cache_gb=-1
 feat_mode=AllCache
 
-python graphsage.py --part_config=${datadir} \
+python /root/projects/DSP_AE/dsp/graphsage.py --part_config=${datadir} \
   --n_ranks=${n_gpu} \
   --cache_ratio=${cache_ratio} \
   --feat_mode=${feat_mode} \

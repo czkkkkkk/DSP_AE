@@ -11,7 +11,7 @@ cache_ratio=50
 graph_cache_ratio=100
 graph_cache_gb=-1
 
-python sampling.py --part_config=${datadir} \
+python /root/projects/DSP_AE/dsp/sampling.py --part_config=${datadir} \
   --n_ranks=${n_gpu} \
   --graph_cache_ratio=${graph_cache_ratio} \
   --graph_cache_gb=${graph_cache_gb} \
