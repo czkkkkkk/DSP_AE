@@ -4,7 +4,7 @@ In this document, we provide guidelines to reproduce the main results (Table 4 a
 ## Prepare docker environment
 1. Install docker on a GPU server and add NVIDIA Runtime for the docker (User guide: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/user-guide.html).
 2. Download the docker from our docker hub repository using 'docker pull zhouqihui/dsp-ppopp-ae:latest'.
-3. Run the docker with 'docker run -it --gpus all zhouqihui/dsp-ppopp-ae:latest /bin/bash'.
+3. Run the docker with 'docker run --rm -it --runtime=nvidia --ipc=host --network=host -e NVIDIA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 zhouqihui/dsp-ppopp-ae:latest /bin/bash'.
 
 ## Prepare datasets
 To minimize the docker size, we provide scripts to download datasets used by DSP and baselines.
