@@ -23,12 +23,14 @@ We use a script preprocess.sh to download all datasets and convert them into the
 ### Run sampling experiments
 
 ```
+cd /root/projects/DSP_AE
 bash sample.sh
 ```
 This is a large script to reproduce Table 6, which generates results in `log/${sys}/sample`. Users can extract some of the commands to reproduce the result of a system in a specific setting.
 
 ### Run end-to-end experiments
 ```
+cd /root/projects/DSP_AE
 bash train.sh
 ```
 This is a large script to reproduce Table 4, which generates results in `log/${sys}/train`. Users can extract some of the commands to reproduce the result of a system in a specific setting.
