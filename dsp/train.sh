@@ -8,7 +8,7 @@ export DGL_DS_MASTER_PORT=12210
 export DGL_DS_COMM_PORT=17211
 
 feat_mode=PartitionCache
-echo "--------------Running DSP on $dataset with $n_gpus GPUs--------------------"
+echo "--------------Running DSP on $dataset with $n_gpu GPUs--------------------"
 if [ $dataset == "ogb-product" ]; then
   feat_cache_ratio=100
   graph_cache_ratio=100
@@ -49,7 +49,7 @@ feat_cache_gb=-1
 
 python /root/projects/DSP_AE/dsp/graphsage.py --part_config=${datadir} \
   --n_ranks=${n_gpu} \
-  --cache_ratio=${cache_ratio} \
+  --cache_ratio=${feat_cache_ratio} \
   --feat_mode=${feat_mode} \
   --graph_cache_ratio=${graph_cache_ratio} \
   --graph_cache_gb=${graph_cache_gb} \
