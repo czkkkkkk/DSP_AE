@@ -138,7 +138,6 @@ def run(rank, world_size, quiver_sampler, quiver_feature, y, train_idx, num_feat
         torch.cuda.synchronize()
         dist.barrier()
         toc = time.time()
-
         if rank == 0:
             print("epoch", epoch, "time cost", toc - tic)
             if epoch >= skip_epoch:
@@ -199,7 +198,7 @@ if __name__ == '__main__':
       quiver_sampler = quiver.pyg.GraphSageSampler(csr_topo, [15, 10, 5], 0, mode="UVA")
       feature = torch.zeros(data.x.shape)
       feature[:] = data.x
-      cache = "5G"
+      cache = "4G"
       quiver_feature = quiver.Feature(rank=0, device_list=list(range(world_size)), device_cache_size=cache, cache_policy="p2p_clique_replicate", csr_topo=csr_topo)
       quiver_feature.from_cpu_tensor(feature)
       quiver.init_p2p(list(range(world_size)))
@@ -210,11 +209,12 @@ if __name__ == '__main__':
       num_features = 256
       num_classes = 3
       num_nodes = int(dataset[0].edge_index.max()) + 1
+      labels = torch.randint(size=(num_nodes, ), low=0, high=num_classes-1).type(torch.LongTensor)
       is_train = (dataset[0].node_types == 0)
       train_idx = torch.nonzero(is_train, as_tuple=True)[0]
       csr_topo = quiver.CSRTopo(data.edge_index)
       quiver_sampler = quiver.pyg.GraphSageSampler(csr_topo, [15, 10, 5], 0, mode='UVA')
-      cache = "5G"
+      cache = "4G"
       quiver_feature = quiver.Feature(rank=0, device_list=list(range(world_size)), device_cache_size=cache, cache_policy="p2p_clique_replicate", csr_topo=csr_topo)
       y = torch.randint(size=(num_nodes, ), low=0, high=num_classes-1).type(torch.LongTensor).squeeze()
       x = torch.rand(num_nodes, 256, dtype=torch.float32)

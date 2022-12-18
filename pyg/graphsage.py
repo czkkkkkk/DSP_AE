@@ -79,7 +79,7 @@ def run(rank, world_size, x, adj, num_features, num_classes, train_idx, labels, 
     train_loader = NeighborSampler(adj, node_idx=train_idx,
                                    sizes=sizes, batch_size=1024,
                                    shuffle=True, persistent_workers=True,
-                                   num_workers=int(32/world_size))
+                                   num_workers=int(32/world_size), return_e_id=False)
 
     torch.manual_seed(12345)
     model = SAGE(num_features, 256, num_classes, num_layers=len(sizes)).to(rank)
@@ -104,7 +104,7 @@ def run(rank, world_size, x, adj, num_features, num_classes, train_idx, labels, 
             adjs = [adj.to(rank) for adj in adjs]
             if not sample_only:
                 optimizer.zero_grad()
-                out = model(x[n_id], adjs)
+                out = model(x[n_id].to(rank), adjs)
                 loss = F.nll_loss(out, y[n_id[:batch_size]])
                 loss.backward()
                 optimizer.step()
@@ -162,6 +162,8 @@ if __name__ == '__main__':
 
       value = torch.arange(adj.nnz())
       adj = adj.set_value(value, layout='coo')
+      dataset = None
+      data = None
     elif graph_name == 'fs':
       dataset = Friendster('/data/pyg/Friendster')
       num_features = 256
@@ -177,5 +179,6 @@ if __name__ == '__main__':
       adj = adj.set_value(value, layout='coo')
       fake_labels = torch.randint(size=(num_nodes, ), low=0, high=num_classes-1).type(torch.LongTensor)
       x = torch.rand(num_nodes, 256, dtype=torch.float32)
+      dataset = None      
 
     mp.spawn(run, args=(world_size, x, adj, num_features, num_classes, train_idx, fake_labels, sample_only), nprocs=world_size, join=True)

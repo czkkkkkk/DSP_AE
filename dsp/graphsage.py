@@ -39,6 +39,7 @@ def compute_acc(pred, labels):
 
 def run(rank, args):
     print("Start rank", rank, "with args:", args)
+    print(args.in_feats)
     th.cuda.set_device(rank)
     setup(rank, args.n_ranks)
     sampler_number = 1
@@ -214,5 +215,4 @@ if __name__ == "__main__":
         help="Memory used to cache features, Setting it not equal to -1 disables cache_ratio",
     )
     args = parser.parse_args()
-
     mp.spawn(run, args=(args,), nprocs=args.n_ranks, join=True)

@@ -122,6 +122,12 @@ if __name__ == "__main__":
         type=int,
         help="Memory used to cache graph topology. Setting it not equal to -1 disables graph_cache_ratio",
     )
+    parser.add_argument(
+        "--in_feats",
+        default=256,
+        type=int,
+        help="In feature dimension used when the graph do not have feature",
+    )
     args = parser.parse_args()
 
     mp.spawn(run, args=(args,), nprocs=args.n_ranks, join=True)

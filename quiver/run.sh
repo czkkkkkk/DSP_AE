@@ -9,4 +9,4 @@ export DGL_DS_USE_NCCL=1
 export DGL_DS_MASTER_PORT=12210
 export DGL_DS_COMM_PORT=17211
 
-python graphsage.py ${graph_name} ${n_gpu} ${sample_only}
+python /root/projects/DSP_AE/quiver/graphsage.py ${graph_name} ${n_gpu} ${sample_only}

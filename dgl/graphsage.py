@@ -79,7 +79,10 @@ def train(rank, world_size, graph, num_classes, train_idx, use_uva, sample_only)
                                                     num_workers=int(32/world_size), use_ddp=False, use_uva=False, persistent_workers=True)
     else:
       train_idx = train_idx.to('cuda')
-      sampler = dgl.dataloading.NeighborSampler([15, 10, 5], prefetch_node_feats=['feat'], prefetch_labels=['label'], replace=True)
+      if not sample_only:
+        sampler = dgl.dataloading.NeighborSampler([15, 10, 5], prefetch_node_feats=['feat'], prefetch_labels=['label'], replace=True)
+      else:
+        sampler = dgl.dataloading.NeighborSampler([15, 10, 5], prefetch_node_feats=None, prefetch_labels=None, replace=True)
       train_dataloader = dgl.dataloading.DataLoader(graph, train_idx, sampler,
                                                     device='cuda', batch_size=1024, shuffle=False, drop_last=False,
                                                     num_workers=0, use_ddp=False, use_uva=True)
@@ -88,7 +91,7 @@ def train(rank, world_size, graph, num_classes, train_idx, use_uva, sample_only)
 
     durations = []
     train_duration = []
-    for i in range(10):
+    for i in range(5):
         model.train()
         cnt = 0
         sampling_time = 0
@@ -116,7 +119,7 @@ def train(rank, world_size, graph, num_classes, train_idx, use_uva, sample_only)
         tt = time.time()
         if rank == 0:
             print("epoch:", i, tt - t0, "batches:", cnt)
-            if i >= 5:
+            if i >= 2:
                 durations.append(tt - t0)
                 train_duration.append(training_time)
         dist.barrier()
