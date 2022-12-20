@@ -69,7 +69,7 @@ def run(rank, args):
         sampler,
         device=data.device,
         batch_size=batch_size,
-        shuffle=True,
+        shuffle=False,
         drop_last=False,
         num_workers=0,
     )
